@@ -11,15 +11,14 @@ const app = express();
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(compression());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // init db
 require("./dbs/init.mongodb");
 
 // init routes
-app.get("/", (req, res) => {
-  const strCompressed = "Hello world";
-  res.status(200).json(strCompressed);
-});
+app.use("", require("./routes/index"));
 
 // handle errors
 
